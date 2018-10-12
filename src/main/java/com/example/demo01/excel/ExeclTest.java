@@ -21,28 +21,30 @@ public class ExeclTest<T> {
 
     public static void main(String[] args) throws Exception {
         List<String> list = new ArrayList();
-        list.add("黄莉娟");
-        list.add("黄胜男");
-        list.add("康佳洺");
-        list.add("李佩佩");
-        list.add("李天白");
-        list.add("刘杨");
-        list.add("孟小然");
-        list.add("祁萃芳");
-        list.add("宋欣怡");
-        list.add("王卉");
-        list.add("吴婷");
-        list.add("杨殿辉");
-        list.add("王梦茹");
-        list.add("叶少微");
-        list.add("余若雅");
-        list.add("张涵");
-        list.add("张露馨");
+        list.add("赵晨宇");
+        list.add("张杨");
         list.add("张鑫");
+        list.add("张露馨");
+        list.add("张涵");
+        list.add("余若雅");
+        list.add("叶少微");
+        list.add("杨殿辉");
+        list.add("吴婷");
+        list.add("王梦茹");
+        list.add("王卉");
+        list.add("宋欣怡");
+        list.add("祁萃芳");
+        list.add("孟小然");
         list.add("刘杨");
         list.add("华东 刘杨");
-        list.add("赵晨宇");
-        qianyan("C:\\Users\\Administrator\\Desktop\\钱\\2018年6月助理绩效汇总.xlsx",list);
+        list.add("李天白");
+        list.add("李佩佩");
+        list.add("康佳洺");
+        list.add("黄胜男");
+        list.add("黄莉娟");
+
+
+        qianyan("C:\\Users\\Administrator\\Desktop\\钱\\10.11\\2018年9月助理绩效汇总.xlsx",list);
 //        List<gkw> read = read(gkw.class, "D:\\test\\excel\\ggw.xlsx", 2);
 //        for (gkw e : read) {
 //            if (e.getProduct().equals("易贷")) {
@@ -278,7 +280,6 @@ public class ExeclTest<T> {
         inputStream = new FileInputStream(file);
         workbook = WorkbookFactory.create(inputStream);
         inputStream.close();
-        String result ="";
         //工作表对象
         for(int i = 0;i<workbook.getNumberOfSheets(); i++){
             Person person = new Person();
@@ -291,17 +292,33 @@ public class ExeclTest<T> {
 
             person.setName(sheetName);
             //获取数据
-            Row row = sheet.getRow(12);
-            Cell cell = row.getCell(7);
-            if(cell!=null){
-                cell.setCellType(Cell.CELL_TYPE_STRING);
-                person.setResult(cell.getStringCellValue());
-            }else {
-                person.setResult("");
+            int num = 0;
+            for(int j = 29;j<31;j++){
+                Row row = sheet.getRow(j);
+                Cell cell = row.getCell(5);
+                if(cell!=null){
+                    cell.setCellType(Cell.CELL_TYPE_STRING);
+                    if(!"".equals(cell.getStringCellValue())){
+                        num = num +Integer.parseInt(cell.getStringCellValue());
+                    }
+                }
             }
-
-
-
+            person.setResult(num+"");
+            personList.add(person);
+        }
+        boolean flag = false;
+        for(String s : list){
+            flag = false;
+            for(Person p: personList){
+                if(s.equals(p.getName())){
+                    System.out.println(p.toString());
+                    flag = true;
+                    break;
+                }
+            }
+            if(!flag){
+                System.out.println(" "+"\t"+" ");
+            }
         }
 
 
