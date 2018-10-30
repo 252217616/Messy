@@ -14,8 +14,8 @@ public class Client {
         final String base = "@#&$%*o!;.";// 字符串由复杂到简单
         try {
             final BufferedImage image = ImageIO.read(new File(path));
-            for (int y = 0; y < image.getHeight(); y += 8) {
-                for (int x = 0; x < image.getWidth(); x+=4) {
+            for (int y = 0; y < image.getHeight(); y += 16) {
+                for (int x = 0; x < image.getWidth(); x+=8) {
                     final int pixel = image.getRGB(x, y);
                     final int r = (pixel & 0xff0000) >> 16, g = (pixel & 0xff00) >> 8, b = pixel & 0xff;
                     final float gray = 0.299f * r + 0.578f * g + 0.114f * b;
