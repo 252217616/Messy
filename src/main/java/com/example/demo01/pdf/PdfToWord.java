@@ -1,29 +1,38 @@
 package com.example.demo01.pdf;
 
-import java.io.File;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
+import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
+import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
+import org.apache.poi.xwpf.usermodel.BreakType;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
-
 public class PdfToWord {
 
     public static void main(String[] args) throws IOException {
-        File file = new File("C:\\Users\\Administrator\\Desktop\\姜南\\2017年百骏审计报告(压缩）.pdf");
-        PDDocument doc = PDDocument.load(file);
-        int pagenumber = doc.getNumberOfPages();
-        System.out.print("pages" + pagenumber);
-        FileOutputStream fos = new FileOutputStream("C:\\Users\\Administrator\\Desktop\\姜南\\2017年百骏审计报告(压缩）.doc");
-        Writer writer = new OutputStreamWriter(fos, "UTF-8");
-        PDFTextStripper stripper = new PDFTextStripper();
-        stripper.setSortByPosition(true);//排序
-        stripper.setStartPage(3);//设置转换的开始页
-        stripper.setEndPage(7);//设置转换的结束页
-        stripper.writeText(doc, writer);
-        writer.close();
-        doc.close();
+        System.out.println("Document converted started");
+        XWPFDocument doc;
+        doc = new XWPFDocument();
+        String pdf = "C:\\Users\\Administrator\\Desktop\\姜南\\2017年百骏审计报告(压缩）01.pdf";
+        PdfReader reader = new PdfReader(pdf);
+        PdfReaderContentParser parser = new PdfReaderContentParser(reader);
+        for (int i = 1; i <= reader.getNumberOfPages(); i++) {
+            TextExtractionStrategy strategy = parser.processContent(i, new SimpleTextExtractionStrategy());
+            String text = strategy.getResultantText();
+            XWPFParagraph p = doc.createParagraph();
+            XWPFRun run = p.createRun();
+            run.setText(text);
+            run.addBreak(BreakType.PAGE);
+        }
+        FileOutputStream out = new FileOutputStream("C:\\Users\\Administrator\\Desktop\\姜南\\2017年百骏审计报告(压缩）01.docx");
+        doc.write(out);
+        out.close();
+        reader.close();
+        System.out.println("Document converted successfully");
+
     }
 }

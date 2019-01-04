@@ -1,7 +1,12 @@
 package com.example.demo01.sort;
 
+import com.example.demo01.bean.LockFreeVector;
+
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ForkJoinPool;
+import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 
 /**
@@ -10,6 +15,7 @@ import java.util.stream.IntStream;
 public class Sorted {
 
     public static void main(String[] args) {
+        ForkJoinPool forkJoinPool = new ForkJoinPool();
         //快速排序
 //        int[] nums = getNums();
 //        int start = 0;
@@ -18,8 +24,18 @@ public class Sorted {
 //        Arrays.stream(nums).forEach(System.out::println);
 
         //二分查找
-        int a [] = new int[] {0,1,2,3,4,5,6,7,8,9};
-        System.out.println(erfen(a,2));
+//        int a [] = new int[] {0,1,2,3,4,5,6,7,8,9};
+//        System.out.println(erfen(a,2));
+        String str = "";
+        LockFreeVector<String> list = new LockFreeVector<String>();
+        for(int i = 0;i<10000;i++){
+
+            list.push_back(i+str);
+        }
+
+        String s = list.get(200);
+        System.out.println(s);
+//        Pattern pattern = Pattern.compile("[^\\S]*");
     }
 
 
@@ -111,7 +127,8 @@ public class Sorted {
                 a[start] = a[end];
                 a[end] = temp;
             }
-            //此时第一次循环比较结束，关键值的位置已经确定了。左边的值都比关键值小，右边的值都比关键值大，但是两边的顺序还有可能是不一样的，进行下面的递归调用
+            //此时第一次循环比较结束，关键值的位置已经确定了。左边的值都比关键值小，右边的值都比关键值大，
+            // 但是两边的顺序还有可能是不一样的，进行下面的递归调用
         }
         //递归
         if (start > low) kuaipai(a, low, start - 1);//左边序列。第一个索引位置到关键值索引-1
@@ -141,6 +158,12 @@ public class Sorted {
         }
         return -1;
     }
+
+
+    /**
+     * 并行排序
+     *
+     */
 
 /**
  * 链表合并

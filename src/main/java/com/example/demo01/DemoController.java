@@ -4,6 +4,8 @@ import com.example.demo01.bean.QRCode;
 import com.example.demo01.section.ParameterDefaultValue;
 import com.example.demo01.service.DemoService;
 import com.example.demo01.twocore.TwoCore;
+import com.example.demo01.yujie.A;
+import com.example.demo01.zifuhua.Client;
 import com.google.gson.Gson;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +35,7 @@ public class DemoController {
 
 
     @RequestMapping(value = "hhhh")
-    public String erroe (@NotNull String str, @Max(10) Integer i){
+    public String erroe (){
 
         return "ok";
     }
@@ -72,4 +74,8 @@ public class DemoController {
         return "ok";
     }
 
+    @RequestMapping(value = "test")
+    public void test(String pag){
+        A.AA.exce(pag);
+    }
 }

@@ -1,5 +1,9 @@
 package com.example.demo01.zifuhua;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.ToString;
+
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -35,7 +39,12 @@ public class Client {
      * @param args
      */
     public static void main(final String[] args) {
-        createAsciiPic("C:\\Users\\Administrator\\Desktop\\卢浚\\杂七杂八\\江南.jpg");
+//        createAsciiPic("C:\\Users\\Administrator\\Desktop\\卢浚\\杂七杂八\\江南.jpg");
+        String str = "JHSUY_SKHUW_KSJ";
+        int i = str.indexOf("_");
+        String substring = str.substring(0, i);
+        System.out.println(substring);
+
     }
 
 }

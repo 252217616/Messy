@@ -79,4 +79,9 @@ public class ExcelBean {
                 ", date=" + date +
                 '}';
     }
+
+    public static void main(String[] args) {
+        Integer a = null;
+        System.out.println(a>11);
+    }
 }
