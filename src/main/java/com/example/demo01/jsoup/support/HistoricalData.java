@@ -37,14 +37,9 @@ public class HistoricalData {
                 sb.setLength(0);
                 String file = sb.append(i).append("-").append(j).append(".html").toString();
                 sb.setLength(0);
-                String dir = sb.append(G.FILE_PATH).append(code).toString();
+                String dir = sb.append(G.HIS_FILE_PATH).append(code).toString();
                 sb.setLength(0);
                 ReptileUtil.saveHtml(url,dir, file);
-                try {
-                    Thread.sleep(1000+G.RANDOM.nextInt(1000));
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
             }
 
         }

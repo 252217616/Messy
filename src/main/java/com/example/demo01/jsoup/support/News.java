@@ -45,15 +45,16 @@ public class News {
      * 下载并保存每天的数据
      *  有历史数据 false 无历史数据 true
      */
-    public  boolean  updateToday( String stockCode){
+    public  boolean  updateToday( String stockCode,String time){
         String url = G.TODAY_URL;
         if (stockCode.startsWith("6") || stockCode.startsWith("7")) {
             url = url+"S/SH" + stockCode;
         } else if (stockCode.startsWith("0") || stockCode.startsWith("3")) {
             url = url+"S/SZ" + stockCode;
         }
-        String dir = G.FILE_PATH+stockCode;
-        return  ReptileUtil.saveHtml(url, dir, G.TODAY_NAME);
+        String dir = G.NEW_FILE_PATH+stockCode;
+        String name = time+G.TODAY_NAME;
+        return  ReptileUtil.saveHtml(url, dir,name);
     }
 
     /**

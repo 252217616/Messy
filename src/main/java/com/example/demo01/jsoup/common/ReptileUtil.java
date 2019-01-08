@@ -1,12 +1,18 @@
 package com.example.demo01.jsoup.common;
 
+import com.example.demo01.jsoup.bean.IP;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ReptileUtil {
@@ -33,6 +39,13 @@ public class ReptileUtil {
             InputStream is;
             // 字节输出流
             FileOutputStream fos = new FileOutputStream(dest);
+            //设置代理
+            System.setProperty("http.maxRedirects", "50");
+            System.getProperties().setProperty("proxySet", "true");
+            // 如果不设置，只要代理IP和代理端口正确,此项不设置也可以
+            String ip = "11.184.192.49";
+            System.getProperties().setProperty("http.proxyHost", ip);
+            System.getProperties().setProperty("http.proxyPort", "80");
             URL temp = new URL(url);
             // 这个地方需要加入头部 避免大部分网站拒绝访问
             // 这个地方是容易忽略的地方所以要注意
@@ -58,9 +71,12 @@ public class ReptileUtil {
             fos.close();
             bis.close();
             is.close();
+            Thread.sleep(100+G.RANDOM.nextInt(100));
         } catch (IOException e) {
             e.printStackTrace();
             return flag;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         return flag;
     }
@@ -92,4 +108,32 @@ public class ReptileUtil {
         }
         return accept.post();
     }
+
+    /**
+     * 获得代理池
+     */
+    public static List<IP> getIpMap () throws IOException {
+        String url = "https://www.kuaidaili.com/free/intr/";
+        List<IP> ipList = new ArrayList<>();
+        for(int i = 1;i<20;i++){
+            url = url+i+"/";
+            Document doc = getDoc(url);
+            Elements tbody = doc.select("#list").select("tr");
+            for(int j=1;j<tbody.size();j++){
+                String[] split = tbody.get(i).text().split(" ");
+                ipList.add(new IP(split[0],split[1]));
+            }
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return ipList;
+    }
+
+    public static void main(String[] args) throws IOException {
+        getIpMap();
+    }
+
 }

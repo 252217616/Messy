@@ -1,5 +1,6 @@
 package com.example.demo01.jsoup.support;
 
+import com.example.demo01.jsoup.bean.IP;
 import com.example.demo01.jsoup.common.G;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -11,6 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Handler {
@@ -23,17 +25,19 @@ public class Handler {
      * param 总页数
      * return String [] 股票代码
      */
-    public  String [] getCodeList(int hs,int sz){
+    public  String [] getCodeList(int hs, int sz, List<IP> list){
         StringBuilder sb = new StringBuilder();
         try {
             //获取沪市所有开盘的代码
             for(int i = 1;i<hs+1;i++){
                 NEWS.basicInfo(G.HS_URL+i,sb);
+                System.out.println("沪市共计"+hs+"页，已完成："+i);
                 Thread.sleep(1000+G.RANDOM.nextInt(1000));
             }
             //获取深市所有开盘的代码
             for(int i = 1;i<sz+1;i++){
                 NEWS.basicInfo(G.SZ_URL+i,sb);
+                System.out.println("深市共计"+sz+"页，已完成："+i);
                 Thread.sleep(1000+G.RANDOM.nextInt(1000));
             }
         } catch (Exception e) {
@@ -109,8 +113,8 @@ public class Handler {
      * 下载并保存每天的数据
      *  有历史数据 false 无历史数据 true
      */
-    public  boolean  updateToday( String stockCode){
-        return  NEWS.updateToday(stockCode);
+    public  boolean  updateToday( String stockCode,String time){
+        return  NEWS.updateToday(stockCode,time);
     }
 
     /**
