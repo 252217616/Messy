@@ -8,6 +8,7 @@ import org.jsoup.select.Elements;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -20,28 +21,30 @@ public class Grasp {
     public static final String JD = "&jidu=";
 
     public static void main(String[] args) {
-        StringBuilder sb = new StringBuilder();
-        int code = 600004;
-        int year = 2003;
-        for (int i = code; i < (code + 1); i++) {
-            for (int j = year; j < 2020; j++) {
-                for (int jidu = 1; jidu < 5; jidu++) {
-                    String url = sb.append(URL).append(i).append(CODE).append(YEAR).append(j).append(JD).append(jidu).toString();
-                    sb.setLength(0);
-                    String file = sb.append(j).append("-").append(jidu).append(".html").toString();
-                    sb.setLength(0);
-                    saveHtml(url,i, file);
-                    try {
-                        Thread.sleep(6000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-
-        }
-        System.out.println("下载完成");
+        System.out.println(new BigDecimal("5.4").subtract(new BigDecimal("5.32")).divide(new BigDecimal("5.4"),2).compareTo(new BigDecimal("0.05")));
+//        saveHtml("http://quote.eastmoney.com/sh600581.html",600581,"600581.html");
+//        StringBuilder sb = new StringBuilder();
+//        int code = 600004;
+//        int year = 2003;
+//        for (int i = code; i < (code + 1); i++) {
+//            for (int j = year; j < 2020; j++) {
+//                for (int jidu = 1; jidu < 5; jidu++) {
+//                    String url = sb.append(URL).append(i).append(CODE).append(YEAR).append(j).append(JD).append(jidu).toString();
+//                    sb.setLength(0);
+//                    String file = sb.append(j).append("-").append(jidu).append(".html").toString();
+//                    sb.setLength(0);
+//                    saveHtml(url,i, file);
+//                    try {
+//                        Thread.sleep(6000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//
+//            }
+//
+//        }
+//        System.out.println("下载完成");
         // 解析本地html文件
 //        saveHtml(url);
 //        getLocalHtml("D:\\tmp\\web");
