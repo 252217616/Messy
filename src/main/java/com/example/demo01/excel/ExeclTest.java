@@ -147,6 +147,8 @@ public class ExeclTest<T> {
                 list.add(target);
             }
         } catch (IllegalArgumentException e) {
+            Object o = list.get(list.size() - 1);
+            System.out.println(o.toString());
             throw new RuntimeException("读取行数错误，导致数据读取异常");
         } catch (Exception e) {
             e.printStackTrace();

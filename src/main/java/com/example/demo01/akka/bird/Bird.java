@@ -28,6 +28,7 @@ public class Bird extends UntypedActor {
 
     /**
      * 粒子初始化--确定当前投资方案
+     * 自定义
      * @throws Exception
      */
     @Override
@@ -111,6 +112,7 @@ public class Bird extends UntypedActor {
 
     /**
      * 校验结果避免出界
+     * 自定义
      */
     private void validareResult(){
         //第一年
