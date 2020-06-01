@@ -17,7 +17,7 @@ public class PdfToWord {
         System.out.println("Document converted started");
         XWPFDocument doc;
         doc = new XWPFDocument();
-        String pdf = "C:\\Users\\Administrator\\Desktop\\姜南\\2017年百骏审计报告(压缩）01.pdf";
+        String pdf = "F:\\Temp\\无从选择.pdf";
         PdfReader reader = new PdfReader(pdf);
         PdfReaderContentParser parser = new PdfReaderContentParser(reader);
         for (int i = 1; i <= reader.getNumberOfPages(); i++) {
@@ -28,7 +28,7 @@ public class PdfToWord {
             run.setText(text);
             run.addBreak(BreakType.PAGE);
         }
-        FileOutputStream out = new FileOutputStream("C:\\Users\\Administrator\\Desktop\\姜南\\2017年百骏审计报告(压缩）01.docx");
+        FileOutputStream out = new FileOutputStream("F:\\Temp\\无从选择.docx");
         doc.write(out);
         out.close();
         reader.close();

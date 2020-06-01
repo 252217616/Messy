@@ -11,10 +11,7 @@ import java.util.Map;
 
 public class Main3 {
     public static void main(String[] args) {
-        Path path = Paths.get("dir");
-        System.out.println(path.toAbsolutePath());
-//        System.out.println(constains("bbc edr qwsa qdsl adjias","bcb"));
-//        allStr2(new char[]{'1', '3', '2','3'});
+
     }
 
     private static boolean constains(String str, String cons) {

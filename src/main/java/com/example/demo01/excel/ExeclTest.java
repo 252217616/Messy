@@ -20,61 +20,36 @@ public class ExeclTest<T> {
     private static final Integer FIRSTROW = 3;
 
     public static void main(String[] args) throws Exception {
-        List<String> list = new ArrayList();
-        list.add("赵晨宇");
-        list.add("张杨");
-        list.add("张鑫");
-        list.add("张露馨");
-        list.add("张涵");
-        list.add("余若雅");
-        list.add("叶少微");
-        list.add("杨殿辉");
-        list.add("吴婷");
-        list.add("王梦茹");
-        list.add("王卉");
-        list.add("宋欣怡");
-        list.add("祁萃芳");
-        list.add("孟小然");
-        list.add("刘杨");
-        list.add("华东 刘杨");
-        list.add("李天白");
-        list.add("李佩佩");
-        list.add("康佳洺");
-        list.add("黄胜男");
-        list.add("黄莉娟");
+        List<gkw> read = read(gkw.class, "D:\\test\\excel\\ggw.xlsx", 2);
+        for (gkw e : read) {
+            if (e.getProduct().equals("易贷")) {
+                e.setProduct("03");
+            } else if (e.getProduct().equals("即时贷")) {
+                e.setProduct("21");
+            } else if (e.getProduct().equals("招手贷")) {
+                e.setProduct("02");
+            }
+            //INSERT INTO advert_position VALUES ('20180711000007', '易贷-H5-未登录-落地页', '易贷-H5-未登录-落地页', '03', '1', '1334', '750', '', '20180711000000','');
+            System.out.println("INSERT INTO ADVERT_POSITION VALUES ('" + e.getId() + "', '" + e.getName() + "', '" + e.getRemark() + "', '" + e.getProduct() + "', '" + e.getNum() + "', '" + e.getHeigh() + "', '" + e.getWidth() + "', '', '20180711000000','');");
+        }
+        File file = new File("D:\\test\\excel\\demo1.xls");
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            ExeclTest<gkw> exl = new ExeclTest<>();
+            HSSFWorkbook wf = exl.write(read);
+            wf.write(fos);
 
-
-        qianyan("C:\\Users\\Administrator\\Desktop\\钱\\10.11\\2018年9月助理绩效汇总.xlsx",list);
-//        List<gkw> read = read(gkw.class, "D:\\test\\excel\\ggw.xlsx", 2);
-//        for (gkw e : read) {
-//            if (e.getProduct().equals("易贷")) {
-//                e.setProduct("03");
-//            } else if (e.getProduct().equals("即时贷")) {
-//                e.setProduct("21");
-//            } else if (e.getProduct().equals("招手贷")) {
-//                e.setProduct("02");
-//            }
-//            //INSERT INTO advert_position VALUES ('20180711000007', '易贷-H5-未登录-落地页', '易贷-H5-未登录-落地页', '03', '1', '1334', '750', '', '20180711000000','');
-//            System.out.println("INSERT INTO ADVERT_POSITION VALUES ('" + e.getId() + "', '" + e.getName() + "', '" + e.getRemark() + "', '" + e.getProduct() + "', '" + e.getNum() + "', '" + e.getHeigh() + "', '" + e.getWidth() + "', '', '20180711000000','');");
-//        }
-//        File file = new File("D:\\test\\excel\\demo1.xls");
-//        try (FileOutputStream fos = new FileOutputStream(file)) {
-//            ExeclTest<ExcelBean> exl = new ExeclTest<>();
-//            HSSFWorkbook wf = exl.write(read);
-//            wf.write(fos);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static List read(Class targetClass, String filePath) {
         return read(targetClass, filePath, FIRSTROW);
     }
 
-    public static List read(Class targetClass, String filePath, Integer startRow) {
+    public  static <T>  List<T> read(Class <T> targetClass, String filePath, Integer startRow) {
 
-        List<Object> list = new ArrayList();
+        List<T> list = new ArrayList<T>();
         File file = new File(filePath);
         InputStream inputStream = null;
         Workbook workbook = null;
@@ -144,7 +119,7 @@ public class ExeclTest<T> {
                         setMethod.invoke(target, cell.getStringCellValue());
                     }
                 }
-                list.add(target);
+                list.add((T)target);
             }
         } catch (IllegalArgumentException e) {
             Object o = list.get(list.size() - 1);
