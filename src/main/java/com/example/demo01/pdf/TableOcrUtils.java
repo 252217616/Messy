@@ -22,19 +22,26 @@ public class TableOcrUtils {
     public static final String APP_ID = "18292924";
     public static final String API_KEY = "UIfqNomNnXvfvgneOkmiZHsL";
     public static final String SECRET_KEY = "Hv8QwUTGxTl0IUzBaXvAmGYaqsoqz8Dw";
-    public static final String IMAGE_PATH = "F:\\Temp\\";
+    public static final String IMAGE_PATH = "D:\\Juno\\dkqt\\备忘录\\";
     public static final boolean DEBUG = true;
 
     static {
         System.load("F:\\software\\安装包\\opencv\\build\\java\\x64\\opencv_java420.dll");
     }
 
-    public static void main(String[] args) {
-        Mat src = Imgcodecs.imread("F:\\temp\\04result.png");
-//        Mat path = cutImage(src, false);
-        Map<String, String> data = splitTable(src, "6");
+    public static void main(String[] args) throws InterruptedException {
+//        Mat src = Imgcodecs.imread("F:\\temp\\04result.png");
+////        Mat path = cutImage(src, false);
+//        Map<String, String> data = splitTable(src, "6");
 //        baiduTextOcr(data);
-        baiduTextOcSingr("table_0_1_7.jpg");
+        StringBuilder sb = new StringBuilder();
+        for (int i = 1 ;i<16;i++){
+            sb.append(baiduTextOcSingr("图片"+i+".png"));
+            sb.append("\n").append("\n").append("\n").append("\n").append("\n");
+            Thread.sleep(1000);
+        }
+        System.out.println(sb.toString());
+
     }
 
     private static void imshow(Mat dst, String name) {
@@ -363,7 +370,7 @@ public class TableOcrUtils {
         }
     }
 
-    private static void baiduTextOcSingr(String name) {
+    private static String  baiduTextOcSingr(String name) {
 //        byte [] grayData = new byte[mat.cols()*mat.rows()];
 //        mat.get(0,0,grayData);
         //百度识别处理
@@ -373,7 +380,8 @@ public class TableOcrUtils {
         client.setSocketTimeoutInMillis(60000);
         JSONObject res = client.basicGeneral(IMAGE_PATH+name, new HashMap<String, String>());
         System.out.println(res.toString(2));
-        String s = "0";
+        StringBuilder sb = new StringBuilder();
+        String s = "";
         try {
             if (res.has("words_result")) {
                 JSONArray words_result = res.getJSONArray("words_result");
@@ -382,21 +390,25 @@ public class TableOcrUtils {
                     if (jsonObject.has("words")) {
                         Object words = jsonObject.get("words");
                         s = words.toString();
-                        if (isNumber(s.substring(0, 1))) {
-                            s = s.replaceAll("\\.", "");
-                            s = s.replaceAll(",", "");
-                            String s1 = s.substring(0, s.length() - 2);
-                            String s2 = s.substring(s.length() - 2, s.length());
-                            s = s1 + "." + s2;
-                        }
+//                        if (isNumber(s.substring(0, 1))) {
+//                            s = s.replaceAll("\\.", "");
+//                            s = s.replaceAll(",", "");
+//                            String s1 = s.substring(0, s.length() - 2);
+//                            String s2 = s.substring(s.length() - 2, s.length());
+//                            s = s1 + "." + s2;
+//                        }
                     }
+                    sb.append(s).append("\n");
+
                 }
+
             }
-            System.out.println(s);
+            return sb.toString();
         } catch (Exception e) {
             System.out.println("cuowu");
             e.printStackTrace();
         }
+        return sb.toString();
     }
 
     private static boolean isNumber(String string) {
